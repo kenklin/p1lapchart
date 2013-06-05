@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<!-- http://bl.ocks.org/mbostock/3884955 -->
+<meta charset="utf-8">
+<style>
+body {
+	font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+	fill: none;
+	stroke: lightgray;
+	shape-rendering: crispEdges;
+}
+
+.line {
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 2;
+}
+</style>
+<body>
+<!--<script src="file:///c:/d3js_projects/d3.v3.min.js"></script>-->
+<script src="http://d3js.org/d3.v3.js"></script>
+<script>
+var filename = "devil2013-lapchart.json";
+var source = "http://www.mylaps.com/en/classification/2641162";
+
+var margin = {top: 40, right: 50, bottom: 30, left: 50},
+	width = 960 - margin.left - margin.right,
+	height = 800 - margin.top - margin.bottom;
+
+var x = d3.scale.linear()
+	.range([0, width]);
+
+var y = d3.scale.linear()
+	.range([0, height]);
+
+var color = d3.scale.category20();
+
+var xAxis = d3.svg.axis()
+	.scale(x)
+	.orient("bottom");
+
+var yAxis = d3.svg.axis()
+	.scale(y)
+	.ticks(44)
+	.tickFormat("")
+	.orient("left");
+
+var line = d3.svg.line()
+	.interpolate("basis")
+	.x(function(d) { return x(d.num); })
+	.y(function(d) { return y(d.pos); });
+	
+var svg = d3.select("body").append("svg")
+	.attr("width", width + margin.left + margin.right)
+	.attr("height", height + margin.top + margin.bottom)
+.append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.json(filename, function(error, data) {
+	color.domain(data.participants.map(function(p) { return p.car; }));
+	
+	var laps_array = d3.entries(data.laps);
+	var cars = laps_array.map(function(l) {
+		return {
+			car: l.key,
+			laps: l.value.map(function(pos, lap) {
+				return {num: lap, pos: pos};
+			})
+		};
+	});
+//	cars.reverse();	// paint slowest first
+	
+	x.domain([
+		d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); }),
+		d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); })
+	]);
+	
+	y.domain([
+		d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.pos; }); }),
+		d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.pos; }); })
+	]);
+
+	svg.append("g")
+		.attr("class", "x axis")
+		.attr("transform", "translate(0," + height + ")")
+		.call(xAxis)
+	.append("text")
+		.attr("x", width - 6)
+		.attr("y", -6)
+		.attr("dx", ".71em")
+		.style("text-anchor", "end")
+		.text("Lap");
+
+	svg.append("g")
+		.attr("class", "y axis")
+		.call(yAxis);
+//	.append("text")
+//		.attr("transform", "rotate(-90)")
+//		.attr("y", 6)
+//		.attr("dy", ".71em")
+//		.style("text-anchor", "end")
+//		.text("Position");
+
+	var car = svg.selectAll(".car")
+		.data(cars)
+	.enter().append("g")
+		.attr("class", "car");
+
+	car.append("path")	// Line
+		.attr("class", "line")
+		.attr("d", function(d) { return line(d.laps); })
+//.on("click", function(d) {console.log(d); d3.select(this).style("stroke-width", 5);})
+.on("mouseover", function() {d3.select(this).style("stroke-width", 5);})
+.on("mouseout", function(d) {
+console.log(d);
+	d3.select(this).attr("stroke-width", 5);
+	d3.select(this).attr("stroke", "white");
+//	d3.select(this).attr("stroke-width", 2);
+})
+		.style("stroke", function(d) { return color(d.car); });
+
+	car.append("text")	// Car number at beginning of path
+		.datum(function(d) { return {car: d.car, value: d.laps[0]}; })
+		.attr("transform", function(d) { return "translate(" + x(d.value.num) + "," + y(d.value.pos) + ")"; })
+		.attr("x", -30)
+		.attr("dy", ".35em")
+		.style("font-size", "12px")
+		.style("font-weight", "bold")
+		.text(function(d) { return d.car; });
+		
+	car.append("text")	// Car number at end of path
+		.datum(function(d) { return {car: d.car, value: d.laps[d.laps.length - 1]}; })
+		.attr("transform", function(d) { return "translate(" + x(d.value.num) + "," + y(d.value.pos) + ")"; })
+		.attr("x", 3)
+		.attr("dy", ".35em")
+		.style("font-size", "12px")
+		.style("font-weight", "bold")
+		.text(function(d) { return d.car; });
+		
+	svg.append("text")	// Title
+        .attr("x", (width / 2))             
+        .attr("y", 0 - 2 * (margin.top / 3))
+        .attr("text-anchor", "middle")  
+        .style("font-size", "16px") 
+        .text("2013 Devil in the Dark - Race");
+
+	svg.append("text")	// Subtitle
+        .attr("x", (width / 2))             
+        .attr("y", 0 - (margin.top / 3))
+        .attr("text-anchor", "middle")  
+        .text("Source: " + source);
+});
+
+</script>
+</body>
