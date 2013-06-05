@@ -16,15 +16,21 @@ body {
 .line {
 	fill: none;
 	stroke: steelblue;
-	stroke-width: 2;
+	stroke-width: 2.5;
 }
 </style>
 <body>
+GitHub: <a href="https://github.com/kenklin/p1lapchart">https://github.com/kenklin/p1lapchart</a>
+<p>
+Click on a line
+<p>
 <!--<script src="file:///c:/d3js_projects/d3.v3.min.js"></script>-->
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
 var filename = "devil2013-lapchart.json";
 var source = "http://www.mylaps.com/en/classification/2641162";
+var skinny = 2.5;
+var heavy = 8;
 
 var margin = {top: 40, right: 50, bottom: 30, left: 50},
 	width = 960 - margin.left - margin.right,
@@ -97,12 +103,6 @@ d3.json(filename, function(error, data) {
 	svg.append("g")
 		.attr("class", "y axis")
 		.call(yAxis);
-//	.append("text")
-//		.attr("transform", "rotate(-90)")
-//		.attr("y", 6)
-//		.attr("dy", ".71em")
-//		.style("text-anchor", "end")
-//		.text("Position");
 
 	var car = svg.selectAll(".car")
 		.data(cars)
@@ -112,14 +112,10 @@ d3.json(filename, function(error, data) {
 	car.append("path")	// Line
 		.attr("class", "line")
 		.attr("d", function(d) { return line(d.laps); })
-//.on("click", function(d) {console.log(d); d3.select(this).style("stroke-width", 5);})
-.on("mouseover", function() {d3.select(this).style("stroke-width", 5);})
-.on("mouseout", function(d) {
-console.log(d);
-	d3.select(this).attr("stroke-width", 5);
-	d3.select(this).attr("stroke", "white");
-//	d3.select(this).attr("stroke-width", 2);
-})
+		.on("click", function(d) {
+			var w = d3.select(this).style("stroke-width");
+			d3.select(this).style("stroke-width", w == skinny ? heavy : skinny);
+		})
 		.style("stroke", function(d) { return color(d.car); });
 
 	car.append("text")	// Car number at beginning of path
@@ -153,6 +149,5 @@ console.log(d);
         .attr("text-anchor", "middle")  
         .text("Source: " + source);
 });
-
 </script>
 </body>
