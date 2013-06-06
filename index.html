@@ -20,17 +20,18 @@ body {
 }
 </style>
 <body>
-GitHub: <a href="https://github.com/kenklin/p1lapchart">https://github.com/kenklin/p1lapchart</a>
+Code: <a href="http://github.com/kenklin/p1lapchart">http://github.com/kenklin/p1lapchart</a><br>
+Data: <a href="http://www.mylaps.com/gm/lapchart/2641162">http://www.mylaps.com/gm/lapchart/2641162</a>
 <p>
 Click on a line
 <p>
 <!--<script src="file:///c:/d3js_projects/d3.v3.min.js"></script>-->
-<script src="http://d3js.org/d3.v3.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 var filename = "devil2013-lapchart.json";
 var source = "http://www.mylaps.com/en/classification/2641162";
-var skinny = 2.5;
-var heavy = 8;
+var line_nosel = 2.5;
+var line_sel = 8;
 
 var margin = {top: 40, right: 50, bottom: 30, left: 50},
 	width = 960 - margin.left - margin.right,
@@ -114,7 +115,7 @@ d3.json(filename, function(error, data) {
 		.attr("d", function(d) { return line(d.laps); })
 		.on("click", function(d) {
 			var w = d3.select(this).style("stroke-width");
-			d3.select(this).style("stroke-width", w == skinny ? heavy : skinny);
+			d3.select(this).style("stroke-width", w == line_nosel ? line_sel : line_nosel);
 		})
 		.style("stroke", function(d) { return color(d.car); });
 
