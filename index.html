@@ -21,7 +21,6 @@ body {
 </style>
 <body>
 Code: <a href="http://github.com/kenklin/p1lapchart">http://github.com/kenklin/p1lapchart</a><br>
-Data: <a href="http://www.mylaps.com/gm/lapchart/2641162">http://www.mylaps.com/gm/lapchart/2641162</a>
 <p>
 Click on a line
 <p>
@@ -29,7 +28,6 @@ Click on a line
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 var filename = "devil2013-lapchart.json";
-var source = "http://www.mylaps.com/en/classification/2641162";
 var line_nosel = 2.5;
 var line_sel = 8;
 
@@ -142,13 +140,13 @@ d3.json(filename, function(error, data) {
         .attr("y", 0 - 2 * (margin.top / 3))
         .attr("text-anchor", "middle")  
         .style("font-size", "16px") 
-        .text("2013 Devil in the Dark - Race");
+        .text("Location: " + data.summary.location + " (" + data.summary.length + ")");
 
 	svg.append("text")	// Subtitle
         .attr("x", (width / 2))             
         .attr("y", 0 - (margin.top / 3))
         .attr("text-anchor", "middle")  
-        .text("Source: " + source);
+        .text("Date: " + data.summary.date);
 });
 </script>
 </body>
