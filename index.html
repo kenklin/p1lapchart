@@ -27,7 +27,8 @@ Click on a line
 <!--<script src="file:///c:/d3js_projects/d3.v3.min.js"></script>-->
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-var filename = "devil2013-lapchart.json";
+//var filename = "devil2013-lapchart.json";
+var filename = "lapchart/2695656.json";
 var line_nosel = 2.5;
 var line_sel = 8;
 
@@ -54,7 +55,7 @@ var yAxis = d3.svg.axis()
 	.orient("left");
 
 var line = d3.svg.line()
-	.interpolate("basis")
+//	.interpolate("basis")
 	.x(function(d) { return x(d.num); })
 	.y(function(d) { return y(d.pos); });
 	
