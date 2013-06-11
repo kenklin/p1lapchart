@@ -1,75 +1,76 @@
 <!DOCTYPE html>
-<!-- saved from url=(0041)http://www.mylaps.com/en/lapchart/2641162 -->
 <html>
-	<head>
-		<meta content="text/html" charset="UTF-8" http-equiv="Content-Type">
-		<meta name="description" content="P1Lapchart html to JSON">
-		<title>P1Lapchart html to JSON</title>
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
-		<script type="text/javascript">
-		function lapchartify(dom) {
-			var lapchart = {
-				summary: undefined,
-				participants: [],
-		//		results: [],
-				laps: {}
-			};
-			
-			// Parse lapchart.summary
-			var summary_select = $("table.events-summary>tbody", dom);
-			lapchart.summary = {
-				date: $(">tr:eq(0)>td:eq(1)", summary_select).text(),
-				location: $(">tr:eq(0)>td:eq(3)", summary_select).text(),
-				length: $(">tr:eq(1)>td:eq(3)", summary_select).text(),
-			}
-						
-			// Parse lapchart.participants
-			var participants_selector = "table.js_lapchart-participants>tbody tr";
-			$(participants_selector, dom).each(function(i) {
-				if (i > 0) {
-					lapchart.participants.push({
-						start: $(":eq(0)", this).text(),
-						car: $(":eq(1) span.participant-number", this).text(),
-						name: $(":eq(1)", this).text()
-					});
-				}
-			});
-
-			var results_selector = "table.js_lapchart-results tr";
-			$(results_selector, dom).each(function(position) {
-				if (position > 0) {
-					var numbers = [];
-					$(">td", this).each(function(lap) {
-						var car = $(this).attr("data-startnumber");
-						if (car != undefined) {
-							numbers.push(car);
-							if (lapchart.laps[car] == undefined) {
-								lapchart.laps[car] = [];
-		//						lapchart.laps[car] = {
-		//							car: car,
-		//							position: []
-		//						};
-							}
-							lapchart.laps[car][lap] = +position;
-		//					lapchart.laps[car].position[lap] = +[position];
-						}
-					});
-		//			lapchart.results.push(numbers);
-				}
-			});
-
-			return lapchart;
+<head>
+	<meta content="text/html" charset="UTF-8" http-equiv="Content-Type">
+	<meta name="description" content="P1Lapchart html to JSON">
+	<title>P1Lapchart html to JSON</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	function lapchartify(dom) {
+		var lapchart = {
+			summary: undefined,
+			participants: [],
+	//		results: [],
+			laps: {}
 		};
-
-		$(function() {
-			var jqxhr = $.get("http://kenlin.com/x/p1lapchart/lapchart/2695656.html", function(data) {
-				var lapchart = lapchartify(data);
-				console.log(JSON.stringify(lapchart));
-			})
-			.fail(function() { alert("error"); });
+		
+		// Parse lapchart.summary
+		var summary_select = $("table.events-summary>tbody", dom);
+		lapchart.summary = {
+			date: $(">tr:eq(0)>td:eq(1)", summary_select).text(),
+			location: $(">tr:eq(0)>td:eq(3)", summary_select).text(),
+			length: $(">tr:eq(1)>td:eq(3)", summary_select).text(),
+		}
+					
+		// Parse lapchart.participants
+		var participants_selector = "table.js_lapchart-participants>tbody tr";
+		$(participants_selector, dom).each(function(i) {
+			if (i > 0) {
+				lapchart.participants.push({
+					start: $(":eq(0)", this).text(),
+					car: $(":eq(1) span.participant-number", this).text(),
+					name: $(":eq(1)", this).text()
+				});
+			}
 		});
-		</script>
+
+		// Parse lapchart.laps
+		var results_selector = "table.js_lapchart-results tr";
+		$(results_selector, dom).each(function(position) {
+			if (position > 0) {
+				var numbers = [];
+				$(">td", this).each(function(lap) {
+					var car = $(this).attr("data-startnumber");
+					if (car != undefined) {
+						numbers.push(car);
+						if (lapchart.laps[car] == undefined) {
+							lapchart.laps[car] = [];
+	//						lapchart.laps[car] = {
+	//							car: car,
+	//							position: []
+	//						};
+						}
+						lapchart.laps[car][lap] = +position;
+	//					lapchart.laps[car].position[lap] = +[position];
+					}
+				});
+	//			lapchart.results.push(numbers);
+			}
+		});
+
+		return lapchart;
+	};
+	</script>
 </head>
 <body>
+	<div id='json'></div>
+	<script>
+		$.get("http://kenlin.com/x/p1lapchart/lapchart/2695656.html", function(data) {
+			$('div#json').text(JSON.stringify(lapchartify(data)));
+		})
+		.fail(function(jqXJR, textStatus, errorThrown) {
+			$('div#json').text(textStatus); 
+		});
+	</script>
 </body>
 </html>
