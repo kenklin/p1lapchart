@@ -6,6 +6,9 @@
 var $ = require('jquery');
 
 var source = "http://kenlin.com/x/p1lapchart/lapchart/2695656.html";
+if (process.argv.length > 2) {
+	source = process.argv[2];
+}
 
 function parse(dom) {
 	var lapchart = {
