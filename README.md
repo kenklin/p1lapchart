@@ -37,3 +37,16 @@ The final graphical visualizations (bottom screenshot) are created on the browse
 <a href="http://kenlin.com/x/p1lapchart/"><img src="https://github.com/kenklin/p1lapchart/blob/master/images/p1lapchart-d3.png?raw=true"></a>
 </td></tr>
 </table>
+
+
+Backstory
+---------
+In 2010-2012 [Grand-Am](http://grand-am.com) race seasons, I worked weekends with 
+[Phoenix Performance](http://phoenixperformance-news.com/) for the Subaru Road Racing Team.
+I wrote custom software that normalized the live track information transmitted to teams.
+A series of web-based dashboards then used this data to derive lap, time, and fuel information
+to help with race strategy.  These were fun, but very tense weekends!
+
+Unfortunately, at the beginning of 2013, the factory [terminated funding](http://subiesport.tv/site/2013/02/subaru-terminating-road-racing-team/).
+Phoenix Performance continues to build, race, and sell championship winning cars.
+I continue to tinker at the intersection of software and motorsports.
