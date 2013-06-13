@@ -3,7 +3,7 @@ p1lapchart
 
 [Lap chart](http://www.collinsdictionary.com/dictionary/english/lap-chart) 
 visualization created with [D3](http://d3js.org/) using
-JSON files webscraped with [jQuery](http://jquery.org) running in [Node](http://nodejs.org/)
+JSON files [web scraped](http://en.wikipedia.org/wiki/Web_scraping) with [jQuery](http://jquery.org) [Node](http://nodejs.org/) application
 from source html at [MyLaps.com](http://mylaps.com).
 
 
@@ -15,7 +15,7 @@ from source html at [MyLaps.com](http://mylaps.com).
 <tr><td align="center">
 &#8595;
 <br><a href="https://github.com/kenklin/p1lapchart/blob/master/node-p1lapchart.js"><strong>node_p1lapchart.js</strong></a>
-<br><i>jQuery & Node webscraper
+<br><i>jQuery web scraper implemented as Node application
 <br>&#8595;
 </td></tr>
 <tr><td align="center">
