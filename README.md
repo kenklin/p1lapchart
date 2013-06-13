@@ -9,12 +9,12 @@ from source html at [MyLaps.com](http://mylaps.com).
 
 <table>
 <tr><td align="center">
-<a href="http://www.mylaps.com/en/lapchart/2695656">http://www.mylaps.com/en/lapchart/2695656</a>
+<a href="http://www.mylaps.com/en/lapchart/2695656"><img src="https://github.com/kenklin/p1lapchart/blob/master/images/p1lapchart-mylaps.png?raw=true"></a>
 <br><i>Source html from mylaps.com
 </td></tr>
 <tr><td align="center">
 &#8595;
-<br><a href="https://github.com/kenklin/p1lapchart/blob/master/node-p1lapchart.js">node_p1lapchart.js</a>
+<br><a href="https://github.com/kenklin/p1lapchart/blob/master/node-p1lapchart.js"><strong>node_p1lapchart.js</strong></a>
 <br><i>jQuery & Node webscraper
 <br>&#8595;
 </td></tr>
@@ -24,11 +24,11 @@ from source html at [MyLaps.com](http://mylaps.com).
 </td></tr>
 <tr><td align="center">
 &#8595;
-<br><a href="https://github.com/kenklin/p1lapchart/blob/master/index.html">index.html</a>
+<br><a href="https://github.com/kenklin/p1lapchart/blob/master/index.html"><strong>index.html</strong></a>
 <br><i>D3 visualization
 <br>&#8595;
 </td></tr>
 <tr><td align="center">
-<a href="http://kenlin.com/x/p1lapchart/"><strong>Interactive P1Lapchart<strong></a>
+<a href="http://kenlin.com/x/p1lapchart/"><img src="https://github.com/kenklin/p1lapchart/blob/master/images/p1lapchart-d3.png?raw=true"></a>
 </td></tr>
 </table>
