@@ -1,11 +1,16 @@
 p1lapchart
 ==========
+I've combined my love of code and motorsports together to automatically create 
+[lap charts](http://www.collinsdictionary.com/dictionary/english/lap-chart) from html race results posted at
+[MyLaps.com](http://mylaps.com).  These charts show cars and their race positions at each lap in the race.
 
-[Lap chart](http://www.collinsdictionary.com/dictionary/english/lap-chart) 
-visualization created with [D3](http://d3js.org/) using
-JSON files [web scraped](http://en.wikipedia.org/wiki/Web_scraping) with [jQuery](http://jquery.org) [Node](http://nodejs.org/) application
-from source html at [MyLaps.com](http://mylaps.com).
+A server runs a [Node](http://nodejs.org) web application that 
+[web scrapes](http://en.wikipedia.org/wiki/Web_scraping) the source html at 
+[MyLaps.com](http://mylaps.com) (top screenshot) using [jQuery](http://jquery.org).
+It produces a JSON representation of the race information.
 
+The final graphical visualizations (bottom screenshot) are created on the browser with code that uses
+[D3](http://d3js.org/) to graphically render the race information from the JSON objects.  
 
 <table>
 <tr><td align="center">
