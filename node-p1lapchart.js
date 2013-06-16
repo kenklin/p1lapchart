@@ -5,25 +5,37 @@
 
 var $ = require('jquery');
 
-var source = "http://kenlin.com/x/p1lapchart/lapchart/2695656.html";
-if (process.argv.length > 2) {
-	source = process.argv[2];
+function getSource() {
+	var source = "http://kenlin.com/x/p1lapchart/lapchart/2695656.html";
+	if (process.argv.length > 2) {
+		source = process.argv[2];
+	}
+	return source;
 }
 
 function parse(dom) {
 	var lapchart = {
-		summary: undefined,
-		participants: [],
-//		results: [],
-		laps: {}
+		 meta: undefined
+		,summary: undefined
+		,participants: []
+//		,results: []
+		,laps: {}	// [carnum][lap] = pos
 	};
 
+	// Create meta
+	var meta_select = $("div.breadcrumb", dom);
+	lapchart.meta = {
+		 createtime: new Date()
+		,source: getSource()
+		,event_name: $(">a:eq(1)", meta_select).text()
+	}
+	
 	// Parse lapchart.summary
 	var summary_select = $("table.events-summary>tbody", dom);
 	lapchart.summary = {
-		date: $(">tr:eq(0)>td:eq(1)", summary_select).text(),
-		location: $(">tr:eq(0)>td:eq(3)", summary_select).text(),
-		length: $(">tr:eq(1)>td:eq(3)", summary_select).text(),
+		 date: $(">tr:eq(0)>td:eq(1)", summary_select).text()
+		,location: $(">tr:eq(0)>td:eq(3)", summary_select).text()
+		,length: $(">tr:eq(1)>td:eq(3)", summary_select).text()
 	}
 					
 	// Parse lapchart.participants
@@ -32,9 +44,9 @@ function parse(dom) {
 		if (i > 0) {
 			var car = $(":eq(1) span.participant-number", this).text();
 			lapchart.participants.push({
-				start: $(":eq(0)", this).text(),
-				car: car,
-				name: $(":eq(1)", this).text().substring(car.length)
+				start: $(":eq(0)", this).text()
+				,car: car
+				,name: $(":eq(1)", this).text().substring(car.length)
 			});
 		}
 	});
@@ -46,7 +58,7 @@ function parse(dom) {
 			var numbers = [];
 			$(">td", this).each(function(lap) {
 				var car = $(this).attr("data-startnumber");
-				if (car != undefined) {
+				if (car != undefined && car != "") {
 					numbers.push(car);
 					if (lapchart.laps[car] == undefined) {
 						lapchart.laps[car] = [];
@@ -68,9 +80,9 @@ function parse(dom) {
 
 
 
-$.get(source, function(data) {
+$.get(getSource(), function(data) {
 	console.log(JSON.stringify(parse(data)));
 })
 .fail(function(jqXJR, textStatus, errorThrown) {
-	console.log(textStatus); 
+	console.log("getSource(): " + textStatus); 
 });

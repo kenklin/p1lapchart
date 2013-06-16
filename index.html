@@ -24,7 +24,6 @@ Code: <a href="http://github.com/kenklin/p1lapchart">http://github.com/kenklin/p
 <p>
 Click on a line
 <p>
-<!--<script src="file:///c:/d3js_projects/d3.v3.min.js"></script>-->
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
 //var filename = "devil2013-lapchart.json";
@@ -72,9 +71,10 @@ d3.json(filename, function(error, data) {
 	var cars = laps_array.map(function(l) {
 		var c = l.key;
 		var p = data.participants.filter(function(element, index, array) {return element.car == c});
+		var n = p[0] == undefined ? undefined : p[0].name;
 		return {
 			car: c,
-			name: p[0].name,
+			name: n,
 			laps: l.value.map(function(pos, lap) {
 				return {num: lap, pos: pos};
 			})
@@ -139,18 +139,18 @@ d3.json(filename, function(error, data) {
 		.style("font-weight", "bold")
 		.text(function(d) { return d.car; });
 		
-	svg.append("text")	// Title
+	svg.append("text")	// Title (location)
         .attr("x", (width / 2))             
         .attr("y", 0 - 2 * (margin.top / 3))
         .attr("text-anchor", "middle")  
         .style("font-size", "16px") 
-        .text("Location: " + data.summary.location + " (" + data.summary.length + ")");
+        .text(data.meta.event_name);
 
-	svg.append("text")	// Subtitle
+	svg.append("text")	// Subtitle (date, source)
         .attr("x", (width / 2))             
         .attr("y", 0 - (margin.top / 3))
         .attr("text-anchor", "middle")  
-        .text("Date: " + data.summary.date);
+        .text(data.summary.location + " (Length: " + data.summary.length + ", Date: " + data.summary.date + "), Source: " + data.meta.source);
 });
 </script>
 </body>
