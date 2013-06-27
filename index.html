@@ -45,6 +45,7 @@ var color = d3.scale.category20();
 
 var xAxis = d3.svg.axis()
 	.scale(x)
+	.tickSize(-height, 0, 0)	// https://github.com/mbostock/d3/wiki/SVG-Axes#wiki-tickSize
 	.orient("bottom");
 
 var yAxis = d3.svg.axis()
