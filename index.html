@@ -22,7 +22,7 @@ body {
 <body>
 Code: <a href="http://github.com/kenklin/p1lapchart">http://github.com/kenklin/p1lapchart</a><br>
 <p>
-Click on a line
+Click on a line (non-working on Chrome)
 <p>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
@@ -42,17 +42,6 @@ var y = d3.scale.linear()
 	.range([0, height]);
 
 var color = d3.scale.category20();
-
-var xAxis = d3.svg.axis()
-	.scale(x)
-	.tickSize(-height, 0, 0)	// https://github.com/mbostock/d3/wiki/SVG-Axes#wiki-tickSize
-	.orient("bottom");
-
-var yAxis = d3.svg.axis()
-	.scale(y)
-	.ticks(44)
-	.tickFormat("")
-	.orient("left");
 
 var line = d3.svg.line()
 //	.interpolate("basis")
@@ -82,16 +71,26 @@ d3.json(filename, function(error, data) {
 		};
 	});
 //	cars.reverse();	// paint slowest first
-	
-	x.domain([
-		d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); }),
-		d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); })
-	]);
-	
-	y.domain([
-		d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.pos; }); }),
-		d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.pos; }); })
-	]);
+
+	// x axis and domain
+	var min_lap = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); });
+	var max_lap = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); });
+	var xAxis = d3.svg.axis()
+		.scale(x)
+		.ticks(max_lap - min_lap)
+		.tickSize(-height)	// https://github.com/mbostock/d3/wiki/SVG-Axes#wiki-tickSize
+		.orient("bottom");
+	x.domain([min_lap, max_lap]);
+
+	// Y axis and domain	
+	var min_pos = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.pos; }); });
+	var max_pos = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.pos; }); });
+	var yAxis = d3.svg.axis()
+		.scale(y)
+		.ticks(max_pos - min_pos)
+//		.tickFormat("")
+		.orient("left");
+	y.domain([min_pos, max_pos]);
 
 	svg.append("g")
 		.attr("class", "x axis")

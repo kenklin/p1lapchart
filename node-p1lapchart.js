@@ -6,7 +6,7 @@
 var $ = require('jquery');
 
 function getSource() {
-	var source = "http://kenlin.com/x/p1lapchart/lapchart/2695656.html";
+	var source = "http://kenlin.com/x/p1lapchart/lapchart/2695656.html";	// http://www.mylaps.com/en/lapchart/2695656
 	if (process.argv.length > 2) {
 		source = process.argv[2];
 	}
@@ -80,8 +80,14 @@ function parse(dom) {
 
 
 
-$.get(getSource(), function(data) {
-	console.log(JSON.stringify(parse(data)));
+//$.get(getSource(), function(data) {
+//	console.log(JSON.stringify(parse(data)));
+//})
+$.ajax({
+  url: getSource(),
+  dataType: "html"
+}).success(function(data) {
+  console.log(data);
 })
 .fail(function(jqXJR, textStatus, errorThrown) {
 	console.log("getSource(): " + textStatus); 
