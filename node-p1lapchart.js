@@ -17,33 +17,33 @@ function parse(dom) {
 	var lapchart = {
 		 meta: undefined
 		,session: undefined
-		,summary: undefined
+		,event: undefined
 		,participants: []
 //		,results: []
 		,laps: {}	// [carnum][lap] = pos
 	};
 
-	// Create meta
-	var meta_select = $("div.breadcrumb", dom);
+	// Create lapchart.meta
 	lapchart.meta = {
 		 createtime: new Date()
 		,source: getSource()
 	}
 	
-	// Create session
-	var session_select = $("div.breadcrumb", dom);
+	// Create lapchart.session
+	var meta_select = $("div.breadcrumb", dom);
+	var event_select = $("table.events-summary>tbody", dom);
 	lapchart.session = {
 		 name: $(">a:eq(1)", meta_select).text()
-		,dateTime: undefined
+		,dateTime: $(">tr:eq(0)>td:eq(1)", event_select).text()
 		,group: undefined
 	}
 	
-	// Parse lapchart.summary
-	var summary_select = $("table.events-summary>tbody", dom);
-	lapchart.summary = {
-		 date: $(">tr:eq(0)>td:eq(1)", summary_select).text()
-		,location: $(">tr:eq(0)>td:eq(3)", summary_select).text()
-		,length: $(">tr:eq(1)>td:eq(3)", summary_select).text()
+	// Parse lapchart.event.location
+	lapchart.event = {
+		 location: {
+			 name: $(">tr:eq(0)>td:eq(3)", event_select).text()
+			,lengthLabel: $(">tr:eq(1)>td:eq(3)", event_select).text()
+		}
 	}
 					
 	// Parse lapchart.participants

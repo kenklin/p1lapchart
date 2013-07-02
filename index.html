@@ -150,7 +150,7 @@ d3.json(filename, function(error, data) {
         .attr("x", (width / 2))             
         .attr("y", 0 - (margin.top / 3))
         .attr("text-anchor", "middle")  
-        .text(data.summary.location + " (Length: " + data.summary.length + ", Date: " + data.summary.date + "), Source: " + data.meta.source);
+        .text(data.event.location.name + " (Length: " + data.event.location.lengthLabel + ", Date: " + data.session.dateTime + "), Source: " + data.meta.source);
 });
 </script>
 </body>
