@@ -55,12 +55,12 @@ var svg = d3.select("body").append("svg")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.json(filename, function(error, data) {
-	color.domain(data.participants.map(function(p) { return p.startNumber; }));
+	color.domain(data.lapchart.participants.map(function(p) { return p.startNumber; }));
 	
-	var laps_array = d3.entries(data.laps);
+	var laps_array = d3.entries(data.p1laps);
 	var cars = laps_array.map(function(l) {
 		var c = l.key;
-		var p = data.participants.filter(function(element, index, array) {return element.startNumber == c});
+		var p = data.lapchart.participants.filter(function(element, index, array) {return element.startNumber == c});
 		var n = p[0] == undefined ? undefined : p[0].name;
 		return {
 			car: c,
@@ -144,13 +144,13 @@ d3.json(filename, function(error, data) {
         .attr("y", 0 - 2 * (margin.top / 3))
         .attr("text-anchor", "middle")  
         .style("font-size", "16px") 
-        .text(data.session.name);
+        .text(data.event.name);
 
 	svg.append("text")	// Subtitle (date, source)
         .attr("x", (width / 2))             
         .attr("y", 0 - (margin.top / 3))
         .attr("text-anchor", "middle")  
-        .text(data.event.location.name + " (Length: " + data.event.location.lengthLabel + ", Date: " + data.session.dateTime + "), Source: " + data.meta.source);
+        .text(data.event.location.name + " (Length: " + data.event.location.lengthLabel + ", Date: " + data.session.dateTime + "), Source: " + data.p1meta.source);
 });
 </script>
 </body>

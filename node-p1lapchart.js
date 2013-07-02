@@ -20,7 +20,7 @@ function parse(dom) {
 		,event: undefined
 		,participants: []
 //		,results: []
-		,laps: {}	// [carnum][lap] = pos
+		,laps: {}	// .carnum[lap] = pos
 	};
 
 	// Create lapchart.meta
