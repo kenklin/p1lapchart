@@ -52,7 +52,7 @@ function parse(dom) {
 		if (i > 0) {
 			var startNumber = $(":eq(1) span.participant-number", this).text();
 			lapchart.participants.push({
-				start: $(":eq(0)", this).text()
+				 position: $(":eq(0)", this).text()
 				,startNumber: startNumber
 				,name: $(":eq(1)", this).text().substring(startNumber.length)
 			});
@@ -71,8 +71,8 @@ function parse(dom) {
 					if (lapchart.laps[startNumber] == undefined) {
 						lapchart.laps[startNumber] = [];
 //						lapchart.laps[startNumber] = {
-//							startNumber: startNumber,
 //							position: []
+//							startNumber: startNumber,
 //						};
 					}
 					lapchart.laps[startNumber][lap] = +position;
