@@ -16,6 +16,7 @@ function getSource() {
 function parse(dom) {
 	var lapchart = {
 		 meta: undefined
+		,session: undefined
 		,summary: undefined
 		,participants: []
 //		,results: []
@@ -27,7 +28,14 @@ function parse(dom) {
 	lapchart.meta = {
 		 createtime: new Date()
 		,source: getSource()
-		,event_name: $(">a:eq(1)", meta_select).text()
+	}
+	
+	// Create session
+	var session_select = $("div.breadcrumb", dom);
+	lapchart.session = {
+		 name: $(">a:eq(1)", meta_select).text()
+		,dateTime: undefined
+		,group: undefined
 	}
 	
 	// Parse lapchart.summary
@@ -42,11 +50,11 @@ function parse(dom) {
 	var participants_selector = "table.js_lapchart-participants>tbody tr";
 	$(participants_selector, dom).each(function(i) {
 		if (i > 0) {
-			var car = $(":eq(1) span.participant-number", this).text();
+			var startNumber = $(":eq(1) span.participant-number", this).text();
 			lapchart.participants.push({
 				start: $(":eq(0)", this).text()
-				,car: car
-				,name: $(":eq(1)", this).text().substring(car.length)
+				,startNumber: startNumber
+				,name: $(":eq(1)", this).text().substring(startNumber.length)
 			});
 		}
 	});
@@ -57,18 +65,18 @@ function parse(dom) {
 		if (position > 0) {
 			var numbers = [];
 			$(">td", this).each(function(lap) {
-				var car = $(this).attr("data-startnumber");
-				if (car != undefined && car != "") {
-					numbers.push(car);
-					if (lapchart.laps[car] == undefined) {
-						lapchart.laps[car] = [];
-//						lapchart.laps[car] = {
-//							car: car,
+				var startNumber = $(this).attr("data-startnumber");
+				if (startNumber != undefined && startNumber != "") {
+					numbers.push(startNumber);
+					if (lapchart.laps[startNumber] == undefined) {
+						lapchart.laps[startNumber] = [];
+//						lapchart.laps[startNumber] = {
+//							startNumber: startNumber,
 //							position: []
 //						};
 					}
-					lapchart.laps[car][lap] = +position;
-//					lapchart.laps[car].position[lap] = +[position];
+					lapchart.laps[startNumber][lap] = +position;
+//					lapchart.laps[startNumber].position[lap] = +[position];
 				}
 			});
 //			lapchart.results.push(numbers);
@@ -80,15 +88,16 @@ function parse(dom) {
 
 
 
-//$.get(getSource(), function(data) {
-//	console.log(JSON.stringify(parse(data)));
-//})
-$.ajax({
-  url: getSource(),
-  dataType: "html"
-}).success(function(data) {
-  console.log(data);
+$.get(getSource(), function(data) {
+	console.log(JSON.stringify(parse(data)));
 })
+//$.ajax({
+//  url: getSource(),
+//  type: "POST",
+//  dataType: "html"
+//}).success(function(data) {
+//  console.log(data);
+//})
 .fail(function(jqXJR, textStatus, errorThrown) {
 	console.log("getSource(): " + textStatus); 
 });
