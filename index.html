@@ -26,10 +26,10 @@ Click on a line (non-working on Chrome)
 <p>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-//var filename = "devil2013-lapchart.json";
 var filename = "lapchart/2695656.json";
 var line_nosel = 2.5;
 var line_sel = 8;
+var tick_spacing = 10;
 
 var margin = {top: 40, right: 50, bottom: 30, left: 200},
 	width = 960 - margin.left - margin.right,
@@ -75,9 +75,13 @@ d3.json(filename, function(error, data) {
 	// x axis and domain
 	var min_lap = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); });
 	var max_lap = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); });
+	var lap_ticks = max_lap - min_lap;
+	while (width / lap_ticks < tick_spacing) {
+		lap_ticks /= 5;
+	}
 	var xAxis = d3.svg.axis()
 		.scale(x)
-		.ticks(max_lap - min_lap)
+		.ticks(lap_ticks)
 		.tickSize(-height)	// https://github.com/mbostock/d3/wiki/SVG-Axes#wiki-tickSize
 		.orient("bottom");
 	x.domain([min_lap, max_lap]);
