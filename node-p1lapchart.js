@@ -14,44 +14,45 @@ function getSource() {
 }
 
 function parse(dom) {
-	var lapchart = {
-		 meta: undefined
+	var data = {
+		 p1meta: undefined
 		,session: undefined
 		,event: undefined
-		,participants: []
-//		,results: []
-		,laps: {}	// .carnum[lap] = pos
+		,lapchart: {
+			participants: []
+		}
+		,p1laps: {}	// .carnum[lap] = pos
 	};
 
-	// Create lapchart.meta
-	lapchart.meta = {
+	// Create data.p1meta
+	data.p1meta = {
 		 createtime: new Date()
 		,source: getSource()
 	}
 	
-	// Create lapchart.session
+	// Create data.session
 	var meta_select = $("div.breadcrumb", dom);
 	var event_select = $("table.events-summary>tbody", dom);
-	lapchart.session = {
-		 name: $(">a:eq(1)", meta_select).text()
-		,dateTime: $(">tr:eq(0)>td:eq(1)", event_select).text()
+	data.session = {
+		 dateTime: $(">tr:eq(0)>td:eq(1)", event_select).text()
 		,group: undefined
 	}
 	
-	// Parse lapchart.event.location
-	lapchart.event = {
-		 location: {
+	// Parse data.event.location
+	data.event = {
+		 name: $(">a:eq(1)", meta_select).text()
+		,location: {
 			 name: $(">tr:eq(0)>td:eq(3)", event_select).text()
 			,lengthLabel: $(">tr:eq(1)>td:eq(3)", event_select).text()
 		}
 	}
 					
-	// Parse lapchart.participants
+	// Parse data.lapchart.participants
 	var participants_selector = "table.js_lapchart-participants>tbody tr";
 	$(participants_selector, dom).each(function(i) {
 		if (i > 0) {
 			var startNumber = $(":eq(1) span.participant-number", this).text();
-			lapchart.participants.push({
+			data.lapchart.participants.push({
 				 position: $(":eq(0)", this).text()
 				,startNumber: startNumber
 				,name: $(":eq(1)", this).text().substring(startNumber.length)
@@ -59,31 +60,23 @@ function parse(dom) {
 		}
 	});
 
-	// Parse lapchart.laps
+	// Parse data.p1laps
 	var results_selector = "table.js_lapchart-results tr";
 	$(results_selector, dom).each(function(position) {
 		if (position > 0) {
-			var numbers = [];
 			$(">td", this).each(function(lap) {
 				var startNumber = $(this).attr("data-startnumber");
 				if (startNumber != undefined && startNumber != "") {
-					numbers.push(startNumber);
-					if (lapchart.laps[startNumber] == undefined) {
-						lapchart.laps[startNumber] = [];
-//						lapchart.laps[startNumber] = {
-//							position: []
-//							startNumber: startNumber,
-//						};
+					if (data.p1laps[startNumber] == undefined) {
+						data.p1laps[startNumber] = [];
 					}
-					lapchart.laps[startNumber][lap] = +position;
-//					lapchart.laps[startNumber].position[lap] = +[position];
+					data.p1laps[startNumber][lap] = +position;
 				}
 			});
-//			lapchart.results.push(numbers);
 		}
 	});
 
-	return lapchart;
+	return data;
 };
 
 
@@ -91,13 +84,6 @@ function parse(dom) {
 $.get(getSource(), function(data) {
 	console.log(JSON.stringify(parse(data)));
 })
-//$.ajax({
-//  url: getSource(),
-//  type: "POST",
-//  dataType: "html"
-//}).success(function(data) {
-//  console.log(data);
-//})
 .fail(function(jqXJR, textStatus, errorThrown) {
 	console.log("getSource(): " + textStatus); 
 });
