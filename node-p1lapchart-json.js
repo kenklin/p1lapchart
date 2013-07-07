@@ -36,8 +36,12 @@ function enhance(data) {
 		}
 	}
 
-	// Remove data.lapchart.positions since it is bulky and unused
-	data.lapchart.positions = null;
+	// Delete properties from original mylaps.com JSON that we don't use
+	delete data.lapchart.laps;
+	delete data.lapchart.positions;
+	for (var i=0; i<data.lapchart.participants.length; i++) {
+		delete data.lapchart.participants[i].color;
+	}
 
 	return data;
 };
