@@ -1,7 +1,5 @@
-// Node program: p1lapchart
-//	Parses mylaps lapchart web pages into json.
-//
-// For Node jQuery on Windows, see https://github.com/tmpvar/jsdom#contextify
+// Node program: node-p1lapchart.js
+//	Parses www.mylaps.com/api json into p1lapchart json.
 
 var $ = require('jquery');
 
@@ -13,11 +11,11 @@ function getSource() {
 	return source;
 }
 
-function enhance(data) {
+function enhance(data, source) {
 	// Add data.meta
 	data.p1meta = {
 		 createtime: new Date()
-		,source: getSource()
+		,source: source
 	}
 
 	// Add data.laps by parsing data.lapchart.positions
@@ -39,9 +37,9 @@ function enhance(data) {
 	// Delete properties from original mylaps.com JSON that we don't use
 	delete data.lapchart.laps;
 	delete data.lapchart.positions;
-	for (var i=0; i<data.lapchart.participants.length; i++) {
-		delete data.lapchart.participants[i].color;
-	}
+	data.lapchart.participants.forEach(function(p) {
+		delete p.color;
+	});
 
 	return data;
 };
@@ -49,7 +47,7 @@ function enhance(data) {
 
 
 $.getJSON(getSource(), function(data) {
-	console.log(JSON.stringify(enhance(data)));
+	console.log(JSON.stringify(enhance(data, getSource())));
 })
 .fail(function(jqXJR, textStatus, errorThrown) {
 	console.log("getJSON failed: " + textStatus); 
