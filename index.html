@@ -2,20 +2,20 @@
 <meta charset="utf-8">
 <style>
 body {
-	font: 10px sans-serif;
+  font: 10px sans-serif;
 }
 
 .axis path,
 .axis line {
-	fill: none;
-	stroke: lightgray;
-	shape-rendering: crispEdges;
+  fill: none;
+  stroke: lightgray;
+  shape-rendering: crispEdges;
 }
 
 .line {
-	fill: none;
-	stroke: steelblue;
-	stroke-width: 2.5;
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 2.5;
 }
 </style>
 <body>
@@ -23,153 +23,154 @@ body {
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script> // Inspired by: http://bl.ocks.org/mbostock/3884955
 function p1lapchart(
-	mylapsid,	// mylaps.com lapchart id, e.g., 2695656, 2748380
-	dstid)		// svg select id
+  mylapsid,	// mylaps.com lapchart id, e.g., 2695656, 2748380, 2759453
+  dstid)	// svg select id
 {
-	var source = 'http://localhost:9001/api/eventlapchart/' + mylapsid;
-	var line_nosel = 2.5;
-	var line_sel = 8;
-	var tick_spacing = 10;
+  var source = 'http://localhost:9001/api/eventlapchart/' + mylapsid;
+  var line_nosel = 2.5;
+  var line_sel = 8;
+  var tick_spacing = 10;
 
-	var margin = {top: 40, right: 50, bottom: 30, left: 200},
-		width = 960 - margin.left - margin.right,
-		height = 800 - margin.top - margin.bottom;
+  var margin = {top: 40, right: 50, bottom: 30, left: 200},
+      width = 960 - margin.left - margin.right,
+      height = 800 - margin.top - margin.bottom;
 
-	var x = d3.scale.linear()
-		.range([0, width]);
+  var x = d3.scale.linear()
+      .range([0, width]);
 
-	var y = d3.scale.linear()
-		.range([0, height]);
+  var y = d3.scale.linear()
+      .range([0, height]);
 
-	var color = d3.scale.category20();
+  var color = d3.scale.category20();
 
-	var line = d3.svg.line()
+  var line = d3.svg.line()
 //	.interpolate("basis")
-		.x(function(d) { return x(d.num); })
-		.y(function(d) { return y(d.pos); });
+      .x(function(d) { return x(d.num); })
+      .y(function(d) { return y(d.pos); });
 		
-	var svg = d3.select("#" + dstid).append("svg")
-		.attr("width", width + margin.left + margin.right)
-		.attr("height", height + margin.top + margin.bottom)
-	.append("g")
-		.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  var svg = d3.select("#" + dstid).append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	d3.json(source, function(error, data) {
-		color.domain(data.lapchart.participants.map(function(p) { return p.startNumber; }));
+  d3.json(source, function(error, data) {
+    color.domain(data.lapchart.participants.map(function(p) { return p.startNumber; }));
 		
-		var laps_array = d3.entries(data.p1laps);
-		var cars = laps_array.map(function(l) {
-			var c = l.key;
-			var p = data.lapchart.participants.filter(function(element, index, array) {return element.startNumber == c});
-			var n = p[0] == undefined ? undefined : p[0].name;
-			return {
-				car: c,
-				name: n,
-				laps: l.value.map(function(pos, lap) {
-					return {num: lap, pos: pos};
-				})
-			};
-		});
-//	cars.reverse();	// paint slowest first
+    var laps_array = d3.entries(data.p1laps);
+    var cars = laps_array.map(function(l) {
+      var c = l.key;
+      var p = data.lapchart.participants.filter(function(element, index, array) {return element.startNumber == c});
+      var n = p[0] == undefined ? undefined : p[0].name;
+      return {
+        car: c,
+        name: n,
+        laps: l.value.map(function(pos, lap) {
+          return {num: lap, pos: pos};
+        })
+      };
+    });
+//cars.reverse();	// paint slowest first
 
-		// x axis and domain
-		var min_lap = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); });
-		var max_lap = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); });
-		var lap_ticks = max_lap - min_lap;
-		while (width / lap_ticks < tick_spacing) {
-			lap_ticks /= 5;
-		}
-		var xAxis = d3.svg.axis()
-			.scale(x)
-			.ticks(lap_ticks)
-			.tickSize(-height)	// https://github.com/mbostock/d3/wiki/SVG-Axes#wiki-tickSize
-			.orient("bottom");
-		x.domain([min_lap, max_lap]);
+    // x axis and domain
+    var min_lap = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); });
+    var max_lap = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); });
+    var lap_ticks = max_lap - min_lap;
+    while (width / lap_ticks < tick_spacing) {
+      lap_ticks /= 5;
+    }
+    var xAxis = d3.svg.axis()
+      .scale(x)
+      .ticks(lap_ticks)
+      .tickSize(-height)	// https://github.com/mbostock/d3/wiki/SVG-Axes#wiki-tickSize
+      .orient("bottom");
+    x.domain([min_lap, max_lap]);
 
-		// Y axis and domain	
-		var min_pos = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.pos; }); });
-		var max_pos = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.pos; }); });
-		var yAxis = d3.svg.axis()
-			.scale(y)
-			.ticks(max_pos - min_pos)
-//		.tickFormat("")
-			.orient("left");
-		y.domain([min_pos, max_pos]);
+    // Y axis and domain	
+    var min_pos = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.pos; }); });
+    var max_pos = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.pos; }); });
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .ticks(max_pos - min_pos)
+//    .tickFormat("")
+      .orient("left");
+    y.domain([min_pos, max_pos]);
 
-		svg.append("g")
-			.attr("class", "x axis")
-			.attr("transform", "translate(0," + height + ")")
-			.call(xAxis)
-		.append("text")
-			.attr("x", width - 6)
-			.attr("y", -6)
-			.attr("dx", ".71em")
-			.style("text-anchor", "end")
-			.text("Lap");
+    svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis)
+    .append("text")
+      .attr("x", width - 6)
+      .attr("y", -6)
+	  .attr("dx", ".71em")
+      .style("text-anchor", "end")
+      .text("Lap");
 
-		svg.append("g")
-			.attr("class", "y axis")
-			.call(yAxis);
+    svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis);
 
-		var car = svg.selectAll(".car")
-			.data(cars)
-		.enter().append("g")
-			.attr("class", "car");
+    var car = svg.selectAll(".car")
+      .data(cars)
+    .enter().append("g")
+      .attr("class", "car");
 
-		car.append("path")	// Line
-			.attr("class", "line")
-			.attr("d", function(d) { return line(d.laps); })
-			.on("click", function(d) {
-				var w = d3.select(this).style("stroke-width");
-				d3.select(this).style("stroke-width", w == line_nosel ? line_sel : line_nosel);
-			})
-			.style("stroke", function(d) { return color(d.car); });
+    car.append("path")	// Line
+      .attr("class", "line")
+      .attr("d", function(d) { return line(d.laps); })
+      .on("click", function(d) {
+        var w = d3.select(this).style("stroke-width");
+        d3.select(this).style("stroke-width", w == line_nosel ? line_sel : line_nosel);
+      })
+      .style("stroke", function(d) { return color(d.car); });
 
-		car.append("text")	// Car number and name at beginning of path
-			.datum(function(d) { return {car: d.car, name: d.name, value: d.laps[0]}; })
-			.attr("transform", function(d) { return "translate(" + x(d.value.num) + "," + y(d.value.pos) + ")"; })
-			.attr("x", -margin.left + 10)
-			.attr("dy", ".35em")
-			.style("font-size", "12px")
-			.text(function(d) { return d.car + " - " + d.name; });
+    car.append("text")	// Car number and name at beginning of path
+      .datum(function(d) { return {car: d.car, name: d.name, value: d.laps[0]}; })
+      .attr("transform", function(d) { return "translate(" + x(d.value.num) + "," + y(d.value.pos) + ")"; })
+      .attr("x", -margin.left + 10)
+      .attr("dy", ".35em")
+      .style("font-size", "12px")
+      .text(function(d) { return d.car + " - " + d.name; });
 			
-		car.append("text")	// Car number at end of path
-			.datum(function(d) { return {car: d.car, value: d.laps[d.laps.length - 1]}; })
-			.attr("transform", function(d) { return "translate(" + x(d.value.num) + "," + y(d.value.pos) + ")"; })
-			.attr("x", 3)
-			.attr("dy", ".35em")
-			.style("font-size", "12px")
-			.text(function(d) { return d.car; });
+    car.append("text")	// Car number at end of path
+      .datum(function(d) { return {car: d.car, value: d.laps[d.laps.length - 1]}; })
+      .attr("transform", function(d) { return "translate(" + x(d.value.num) + "," + y(d.value.pos) + ")"; })
+      .attr("x", 3)
+      .attr("dy", ".35em")
+      .style("font-size", "12px")
+      .text(function(d) { return d.car; });
 			
-		svg.append("text")	// Title (location)
-			.attr("x", (width / 2))             
-			.attr("y", 0 - 2 * (margin.top / 3))
-			.attr("text-anchor", "middle")  
-			.style("font-size", "16px") 
-			.text(data.event.name);
+    svg.append("text")	// Title (location)
+      .attr("x", (width / 2))             
+      .attr("y", 0 - 2 * (margin.top / 3))
+      .attr("text-anchor", "middle")  
+      .style("font-size", "16px") 
+      .text(data.event.name);
 
-		svg.append("text")	// Subtitle (date, source)
-			.attr("x", (width / 2))             
-			.attr("y", 0 - (margin.top / 3))
-			.attr("text-anchor", "middle")  
-			.text(data.event.location.name + " (Length: " + data.event.location.lengthLabel + ", Date: " + data.session.dateTime + "), Source: " + data.p1meta.source);
-	});
+    svg.append("text")	// Subtitle (date, source)
+      .attr("x", (width / 2))             
+      .attr("y", 0 - (margin.top / 3))
+      .attr("text-anchor", "middle")  
+      .text(data.event.location.name + " (Length: " + data.event.location.lengthLabel + ", Date: " + data.session.dateTime + "), Source: " + data.p1meta.source);
+  });
 }
 </script>
 
 <form>	<!-- http://api.jquery.com/submit/ -->
-MyLaps.com event lapchart ID: <input type="text" id="mylapsid" value="2695656" />
-<input type="submit" />
+  MyLaps.com event lapchart ID: <input type="text" id="mylapsid" value="2695656" />
+  <input type="submit" />
 </form>
 <script>
 $("form").submit(function() {
-	$("#lapchart").text("");
-	p1lapchart($('#mylapsid').val(), "lapchart");
-	return false;
-});</script>
+  $("#lapchart").html("Click on a line (non-working on Chrome)<br>");
+  p1lapchart($('#mylapsid').val(), "lapchart");
+  return false;
+});
+</script>
+
 <p>
-Code: <a href="http://github.com/kenklin/p1lapchart">http://github.com/kenklin/p1lapchart</a><br>
+Code: <a href='http://github.com/kenklin/p1lapchart'>http://github.com/kenklin/p1lapchart</a>
 <p>
-Click on a line (non-working on Chrome)<br>
 <div id="lapchart"></div>
 </body>
