@@ -66,12 +66,12 @@ function enhance(data, source) {
 
 
 app.get('/api/eventlapchart/:id', function(req, res) {
-	var source = getSource(req.params.id);
-	$.getJSON(source, function(data) {
-		res.json(enhance(data, source));
+	var sourceurl = getSource(req.params.id);
+	$.getJSON(sourceurl, function(data) {
+		res.json(enhance(data, sourceurl));
 	})
 	.fail(function(jqXJR, textStatus, errorThrown) {
-		console.log('getJSON("' + source + '") failed: ' + textStatus);
+		console.log('getJSON("' + sourceurl + '") failed: ' + textStatus);
 		res.json({"p1meta": {"status": 404}});
 	});
 });
