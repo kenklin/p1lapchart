@@ -22,11 +22,15 @@ body {
 <body>
 Code: <a href="http://github.com/kenklin/p1lapchart">http://github.com/kenklin/p1lapchart</a><br>
 <p>
+<div id="lapchart"></div>
 Click on a line (non-working on Chrome)
 <p>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script>
-var filename = "lapchart/2695656.json";
+//var source = "lapchart/2695656.json";
+//var id = "2748380";
+var id = "2695656";
+var source = 'http://localhost:9001/api/eventlapchart/' + id;
 var line_nosel = 2.5;
 var line_sel = 8;
 var tick_spacing = 10;
@@ -54,7 +58,7 @@ var svg = d3.select("body").append("svg")
 .append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.json(filename, function(error, data) {
+d3.json(source, function(error, data) {
 	color.domain(data.lapchart.participants.map(function(p) { return p.startNumber; }));
 	
 	var laps_array = d3.entries(data.p1laps);
