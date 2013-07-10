@@ -19,6 +19,15 @@ body {
 }
 </style>
 <body>
+<form>
+  MyLaps.com event ID: <input type="text" id="eventid" />
+  <input type="submit" id="geteventid" value="Lapchart"/>
+</form>
+<p>
+Code: <a href='http://github.com/kenklin/p1lapchart'>http://github.com/kenklin/p1lapchart</a>
+<p>
+<div id="lapchartdiv"></div>
+
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script> // Inspired by: http://bl.ocks.org/mbostock/3884955
@@ -155,22 +164,24 @@ function p1lapchart(
       .text(data.event.location.name + " (Length: " + data.event.location.lengthLabel + ", Date: " + data.session.dateTime + "), Source: " + data.p1meta.source);
   });
 }
-</script>
 
-<form>	<!-- http://api.jquery.com/submit/ -->
-  MyLaps.com event lapchart ID: <input type="text" id="mylapsid" value="2695656" />
-  <input type="submit" />
-</form>
-<script>
-$("form").submit(function() {
-  $("#lapchart").html("Click on a line (non-working on Chrome)<br>");
-  p1lapchart($('#mylapsid').val(), "lapchart");
+$('form').submit(function() {	// http://api.jquery.com/submit
+  $('#lapchart').html('Click on a line (non-working on Chrome)<br>');
+  p1lapchart($('#eventid').val(), 'lapchartdiv');
   return false;
+});
+
+function getURLParameter(name) {	// http://stackoverflow.com/questions/1403888/get-url-parameter-with-jquery
+  return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search)||[,""])[1].replace(/\+/g, '%20'))||null;
+}
+
+$(function() {
+  var eventid = getURLParameter('id');	// 2695656, 2748380, 2759453
+  if (eventid != null && eventid != '') {
+    $('#eventid').val(eventid);
+    $('#geteventid').submit();
+  }
 });
 </script>
 
-<p>
-Code: <a href='http://github.com/kenklin/p1lapchart'>http://github.com/kenklin/p1lapchart</a>
-<p>
-<div id="lapchart"></div>
 </body>
