@@ -4,6 +4,7 @@
 // To setup on AWS EC2 see:
 // 1) http://iconof.com/blog/how-to-install-setup-node-js-on-amazon-aws-ec2-complete-guide/
 // 2) https://gist.github.com/kentbrew/776580 
+//		sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to 8080
 
 var port = 8080;
 
