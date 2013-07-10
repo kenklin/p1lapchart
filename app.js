@@ -1,7 +1,11 @@
 // Node express program: app.js
 //	Parses www.mylaps.com/api json into p1lapchart json.
+//
+// To setup on AWS EC2 see:
+// 1) http://iconof.com/blog/how-to-install-setup-node-js-on-amazon-aws-ec2-complete-guide/
+// 2) https://gist.github.com/kentbrew/776580 
 
-var port = 9001;
+var port = 8080;
 
 var $ = require('jquery');
 var express = require('express');
