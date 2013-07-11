@@ -35,7 +35,7 @@ function p1lapchart(
   eventid,		// mylaps.com lapchart event id, e.g., 2695656, 2748380, 2759453
   lapchartdiv)	// element id for placing SVG chart
 {
-  var source = 'http://ec2-54-227-108-228.compute-1.amazonaws.com/api/eventlapchart/' + eventid;
+  var source = 'http://ec2-54-227-108-228.compute-1.amazonaws.com/api/eventlapchart/' + eventid; // 'http://localhost:8080/api/eventlapchart/' + eventid;
   var line_nosel = 2.5;
   var line_sel = 8;
   var tick_spacing = 10;
@@ -171,7 +171,7 @@ function p1lapchart(
 }
 
 $('form').submit(function() {	// http://api.jquery.com/submit
-  $('#lapchart').html('Click on a line (non-working on Chrome)<br>');
+  $('#lapchartdiv').html('Click on a line (non-working on Chrome)<br>');
   p1lapchart($('#eventid').val(), 'lapchartdiv');
   return false;
 });
