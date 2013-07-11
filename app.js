@@ -44,7 +44,7 @@ function enhance(data, source) {
 	}
 
 	// Add data.laps by parsing data.lapchart.positions
-	data.p1laps = new Object();
+	data.p1laps = {};
 	for (var position=0; position<data.lapchart.positions.length; position++) {
 		for (var lap=0; lap<data.lapchart.laps.length; lap++) {
 			if (data.lapchart.positions[position][lap] != undefined) {
@@ -70,15 +70,26 @@ function enhance(data, source) {
 };
 
 
+cache = {};	// <id>: <json>
+
 app.get('/api/eventlapchart/:id', function(req, res) {
-	var sourceurl = getSource(req.params.id);
-	$.getJSON(sourceurl, function(data) {
-		res.json(enhance(data, sourceurl));
-	})
-	.fail(function(jqXJR, textStatus, errorThrown) {
-		console.log('getJSON("' + sourceurl + '") failed: ' + textStatus);
-		res.json({"p1meta": {"status": 404}});
-	});
+	var id = req.params.id;
+	var sourceurl = getSource(id);
+	if (cache[id] != null) {
+		console.log('getJSON("' + sourceurl + '") cached');
+		res.json(cache[id]);
+	} else {
+		$.getJSON(sourceurl, function(data) {
+			console.log('getJSON("' + sourceurl + '") success');
+			var json = enhance(data, sourceurl);
+			res.json(json);
+			cache[id] = json;
+		})
+		.fail(function(jqXJR, textStatus, errorThrown) {
+			console.log('getJSON("' + sourceurl + '") failed: ' + textStatus);
+			res.json({"p1meta": {"status": 404}});
+		});
+	}
 });
 
 app.listen(port);
