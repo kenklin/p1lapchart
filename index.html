@@ -38,30 +38,14 @@ function p1lapchart(
   var source = 'http://ec2-54-227-108-228.compute-1.amazonaws.com/api/eventlapchart/' + eventid; // 'http://localhost:8080/api/eventlapchart/' + eventid;
   var line_nosel = 2.5;
   var line_sel = 8;
-  var tick_spacing = 10;
+  var x_tick_spacing = 10;	// min x (laps) spacing in pixels
+  var y_tick_spacing = 12;	// min y (cars/pos) spacing in pixels
 
+  var overall_width = 960;
+  var overall_height = 800;
   var margin = {top: 40, right: 50, bottom: 30, left: 200},
-      width = 960 - margin.left - margin.right,
-      height = 800 - margin.top - margin.bottom;
-
-  var x = d3.scale.linear()
-      .range([0, width]);
-
-  var y = d3.scale.linear()
-      .range([0, height]);
-
-  var color = d3.scale.category20();
-
-  var line = d3.svg.line()
-//	.interpolate("basis")
-      .x(function(d) { return x(d.num); })
-      .y(function(d) { return y(d.pos); });
-		
-  var svg = d3.select("#" + lapchartdiv).append("svg")
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+      width = overall_width - margin.left - margin.right,
+      height = overall_height - margin.top - margin.bottom;
 
   d3.json(source, function(error, data) {
     if (data.p1meta.status != 0) {
@@ -69,6 +53,7 @@ function p1lapchart(
 	  return;
 	}
 	
+    var color = d3.scale.category20();
     color.domain(data.lapchart.participants.map(function(p) { return p.startNumber; }));
 		
     var laps_array = d3.entries(data.p1laps);
@@ -86,29 +71,47 @@ function p1lapchart(
     });
 //cars.reverse();	// paint slowest first
 
-    // x axis and domain
-    var min_lap = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); });
-    var max_lap = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); });
-    var lap_ticks = max_lap - min_lap;
-    while (width / lap_ticks < tick_spacing) {
+	// Determine x and y value domains
+	var domain = {
+      x_min: d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.num; }); }),
+      x_max: d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.num; }); }),
+      y_min: d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.pos; }); }),
+      y_max: d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.pos; }); })
+	};
+	
+    // y axis (height is adaptive)
+    while (height / (domain.y_max - domain.y_min) < y_tick_spacing) {
+      overall_height += 50;
+      height += 50;
+    }
+    var y = d3.scale.linear()
+      .range([0, height]);
+    var yAxis = d3.svg.axis()
+      .scale(y)
+      .ticks(domain.y_max - domain.y_min)
+//    .tickFormat("")
+      .orient("left");
+    y.domain([domain.y_min, domain.y_max]);
+
+    // x axis (width is constant)
+    var lap_ticks = domain.x_max - domain.x_min;
+    while (width / lap_ticks < x_tick_spacing) {
       lap_ticks /= 5;
     }
+    var x = d3.scale.linear()
+      .range([0, width]);
     var xAxis = d3.svg.axis()
       .scale(x)
       .ticks(lap_ticks)
       .tickSize(-height)	// https://github.com/mbostock/d3/wiki/SVG-Axes#wiki-tickSize
       .orient("bottom");
-    x.domain([min_lap, max_lap]);
+    x.domain([domain.x_min, domain.x_max]);
 
-    // Y axis and domain	
-    var min_pos = d3.min(cars, function(car) { return d3.min(car.laps, function(v) { return v.pos; }); });
-    var max_pos = d3.max(cars, function(car) { return d3.max(car.laps, function(v) { return v.pos; }); });
-    var yAxis = d3.svg.axis()
-      .scale(y)
-      .ticks(max_pos - min_pos)
-//    .tickFormat("")
-      .orient("left");
-    y.domain([min_pos, max_pos]);
+    var svg = d3.select("#" + lapchartdiv).append("svg")
+      .attr("width", overall_width)
+      .attr("height", overall_height)
+    .append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
     svg.append("g")
       .attr("class", "x axis")
@@ -130,6 +133,11 @@ function p1lapchart(
     .enter().append("g")
       .attr("class", "car");
 
+    var line = d3.svg.line()
+//	.interpolate("basis")
+      .x(function(d) { return x(d.num); })
+      .y(function(d) { return y(d.pos); });
+		
     car.append("path")	// Line
       .attr("class", "line")
       .attr("d", function(d) { return line(d.laps); })
