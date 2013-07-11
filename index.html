@@ -32,10 +32,10 @@ Code: <a href='http://github.com/kenklin/p1lapchart'>http://github.com/kenklin/p
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <script> // Inspired by: http://bl.ocks.org/mbostock/3884955
 function p1lapchart(
-  mylapsid,	// mylaps.com lapchart id, e.g., 2695656, 2748380, 2759453
-  dstid)	// svg select id
+  eventid,		// mylaps.com lapchart event id, e.g., 2695656, 2748380, 2759453
+  lapchartdiv)	// element id for placing SVG chart
 {
-  var source = 'http://ec2-54-227-108-228.compute-1.amazonaws.com/api/eventlapchart/' + mylapsid;
+  var source = 'http://ec2-54-227-108-228.compute-1.amazonaws.com/api/eventlapchart/' + eventid;
   var line_nosel = 2.5;
   var line_sel = 8;
   var tick_spacing = 10;
@@ -57,13 +57,18 @@ function p1lapchart(
       .x(function(d) { return x(d.num); })
       .y(function(d) { return y(d.pos); });
 		
-  var svg = d3.select("#" + dstid).append("svg")
+  var svg = d3.select("#" + lapchartdiv).append("svg")
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
     .append("g")
       .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
   d3.json(source, function(error, data) {
+    if (data.p1meta.status != 0) {
+      $('#' + lapchartdiv).html('<h2>Sorry, either the P1LapChart server is down or the entered MyLaps.com ID (' + eventid + ') is not for a lapchart.</h2>');
+	  return;
+	}
+	
     color.domain(data.lapchart.participants.map(function(p) { return p.startNumber; }));
 		
     var laps_array = d3.entries(data.p1laps);
