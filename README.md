@@ -12,6 +12,7 @@ It produces a JSON representation of the race information.
 The final graphical visualizations (bottom screenshot) are created on the browser with code that uses
 [D3](http://d3js.org/) to graphically render the race information from the JSON objects.  
 
+Click on the final (bottom-most) picture to run it.
 <table>
 <tr><td align="center">
 <a href="http://www.mylaps.com/en/lapchart/2695656"><img src="https://github.com/kenklin/p1lapchart/blob/master/images/p1lapchart-mylaps.png?raw=true"></a>
@@ -34,7 +35,7 @@ The final graphical visualizations (bottom screenshot) are created on the browse
 <br>&#8595;
 </td></tr>
 <tr><td align="center">
-<a href="http://kenlin.com/x/p1lapchart/"><img src="https://github.com/kenklin/p1lapchart/blob/master/images/p1lapchart-d3.png?raw=true"></a>
+<a href="http://kenlin.com/x/p1lapchart/?id=2695656"><img src="https://github.com/kenklin/p1lapchart/blob/master/images/p1lapchart-d3.png?raw=true"></a>
 </td></tr>
 </table>
 
