@@ -20,7 +20,7 @@ body {
 </style>
 <body>
 <form>
-  MyLaps.com event ID: <input type="text" id="eventid" />
+  MyLaps.com event ID: <input type="text" id="eventid" value="2695656" />
   <input type="submit" id="geteventid" value="Lapchart"/>
 </form>
 <p>
@@ -190,6 +190,9 @@ function getURLParameter(name) {	// http://stackoverflow.com/questions/1403888/g
 
 $(function() {
   var eventid = getURLParameter('id');	// 2695656, 2748380, 2759453
+  if (eventid == null) {
+    eventid = $('#eventid').val();
+  }
   if (eventid != null && eventid != '') {
     $('#eventid').val(eventid);
     $('#geteventid').submit();
