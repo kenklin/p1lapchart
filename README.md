@@ -4,12 +4,14 @@ I've combined my love of code and motorsports together to automatically create
 [lap charts](http://www.collinsdictionary.com/dictionary/english/lap-chart) from html race results posted at
 [MyLaps.com](http://mylaps.com).  These charts show cars and their race positions at each lap in the race.
 
-A server runs a [Node](http://nodejs.org) web application that 
-[web scrapes](http://en.wikipedia.org/wiki/Web_scraping) the source html at 
-[MyLaps.com](http://mylaps.com) (top screenshot) using [jQuery](http://jquery.org).
-It produces a JSON representation of the race information.
+An [AWS EC2](http://aws.amazon.com/ec2/) server runs a [Node](http://nodejs.org)/[Express](http://expressjs.com/)
+web application that [web scrapes](http://en.wikipedia.org/wiki/Web_scraping) the source html from 
+[MyLaps.com](http://mylaps.com) (top screenshot) using
+[jQuery](http://jquery.org).
+It produces a [JSON](http://en.wikipedia.org/wiki/Json) representation of the race information through a 
+[REST API](http://en.wikipedia.org/wiki/Representational_state_transfer).
 
-The final graphical visualizations (bottom screenshot) are created on the browser with code that uses
+The final graphical visualizations (bottom screenshot) are created on the browser via JavaScript that uses
 [D3](http://d3js.org/) to graphically render the race information from the JSON objects.  
 
 Click on the final (bottom-most) picture to run it.
@@ -22,6 +24,7 @@ Click on the final (bottom-most) picture to run it.
 &#8595;
 <br><a href="https://github.com/kenklin/p1lapchart/blob/master/node-p1lapchart.js"><strong>node_p1lapchart.js</strong></a>
 <br><i>jQuery web scraper implemented as Node application
+<br>running on AWS EC2
 <br>&#8595;
 </td></tr>
 <tr><td align="center">
