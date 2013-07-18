@@ -42,6 +42,11 @@ Click on the final (bottom-most) picture to run it.
 </td></tr>
 </table>
 
+Selected Race Series
+--------------------
+[Grand-Am Rolex / Continental Tire](http://p1software.com/lapchart/grand-american-road-racing-grand-am/)
+
+[South Jersey Region, SCCA](http://p1software.com/lapchart/south-jersey-region-scca)
 
 Backstory
 ---------
