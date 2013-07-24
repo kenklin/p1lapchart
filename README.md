@@ -14,7 +14,6 @@ It produces a [JSON](http://en.wikipedia.org/wiki/Json) representation of the ra
 The final graphical visualizations (bottom screenshot) are created on the browser via JavaScript that uses
 [D3](http://d3js.org/) to graphically render the race information from the JSON objects.  
 
-Click on the final (bottom-most) picture to run it.
 <table>
 <tr><td align="center">
 <a href="http://www.mylaps.com/en/lapchart/2695656"><img src="https://github.com/kenklin/p1lapchart/blob/master/images/p1lapchart-mylaps.png?raw=true"></a>
@@ -42,11 +41,21 @@ Click on the final (bottom-most) picture to run it.
 </td></tr>
 </table>
 
+To Run
+------
+Click on the final (bottom-most) picture above to run p1lapchart on 2695656.
+The *Selected Race Series* section below points to pages with groups of lapcharts.
+
+There currently is no nice way of looking the MyLaps.com id for a race,
+except to find the race on MyLaps.com and note the id in its URL.  :(
+
 Selected Race Series
 --------------------
 [Grand-Am Rolex / Continental Tire](http://p1software.com/lapchart/grand-american-road-racing-grand-am/)
 
 [South Jersey Region, SCCA](http://p1software.com/lapchart/south-jersey-region-scca)
+
+[San Franciso Region SCCA](http://p1software.com/lapchart/san-francisco-region-scca)
 
 Backstory
 ---------
