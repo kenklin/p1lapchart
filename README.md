@@ -44,14 +44,18 @@ The final graphical visualizations (bottom screenshot) are created on the browse
 To Run
 ------
 Click on the final (bottom-most) picture above to run p1lapchart on 2695656.
-The *Selected Race Series* section below points to pages with groups of lapcharts.
+The *P1Software* section below points to pages with groups of lapcharts.
 
 There currently is no nice way of looking the MyLaps.com id for a race,
 except to find the race on MyLaps.com and note the id in its URL.  :(
 
-Selected Race Series
---------------------
+P1Software.com
+--------------
+The [P1Software.com Lapchart](http://p1software.com/lapchart) page compiles lapcharts for selected race series including:
+
 [Grand-Am Rolex / Continental Tire](http://p1software.com/lapchart/grand-american-road-racing-grand-am/)
+
+[BMW CCA Club Racing](http://p1software.com/lapchart/bmw-cca-club-racing)
 
 [South Jersey Region, SCCA](http://p1software.com/lapchart/south-jersey-region-scca)
 
