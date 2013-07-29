@@ -24,6 +24,7 @@ body {
   <input type="submit" id="geteventid" value="Lapchart"/>
 </form>
 <p>
+Home: <a href='http://p1software.com/lapchart'>http://p1software.com/lapchart</a><br>
 Code: <a href='http://github.com/kenklin/p1lapchart'>http://github.com/kenklin/p1lapchart</a>
 <p>
 <div id="lapchartdiv"></div>
@@ -179,7 +180,7 @@ function p1lapchart(
 }
 
 $('form').submit(function() {	// http://api.jquery.com/submit
-  $('#lapchartdiv').html('Click on a line (non-working on Chrome)<br>');
+  $('#lapchartdiv').html('Click on a line (IE and Firefoxworking)<br>');
   p1lapchart($('#eventid').val(), 'lapchartdiv');
   return false;
 });
