@@ -53,13 +53,16 @@ P1Software.com
 --------------
 The [P1Software.com Lapchart](http://p1software.com/lapchart) page compiles lapcharts for selected race series including:
 
-[Grand-Am Rolex / Continental Tire](http://p1software.com/lapchart/grand-american-road-racing-grand-am/)
+- [Grand-Am Rolex / Continental Tire](http://p1software.com/lapchart/grand-american-road-racing-grand-am/)
 
-[BMW CCA Club Racing](http://p1software.com/lapchart/bmw-cca-club-racing)
+- [BMW CCA Club Racing](http://p1software.com/lapchart/bmw-cca-club-racing)
 
-[South Jersey Region, SCCA](http://p1software.com/lapchart/south-jersey-region-scca)
+- [24 Hours of LeMONS](http://p1software.com/lapchart/24-hours-of-lemons/)
 
-[San Franciso Region SCCA](http://p1software.com/lapchart/san-francisco-region-scca)
+- SCCA
+    - [Tri-Region SCCA](http://p1software.com/lapchart/tri-region-scca/)
+    - [South Jersey Region, SCCA](http://p1software.com/lapchart/south-jersey-region-scca)
+    - [San Franciso Region SCCA](http://p1software.com/lapchart/san-francisco-region-scca)
 
 Backstory
 ---------
