@@ -1,8 +1,8 @@
 p1lapchart
 ==========
-I've combined my love of code and motorsports together to automatically create 
-[lap charts](http://www.collinsdictionary.com/dictionary/english/lap-chart) from html race results posted at
-[MyLaps.com](http://mylaps.com).  These charts show cars and their race positions at each lap in the race.
+I've combined my love of code and motorsports together to programmatically create 
+[lap charts](http://www.collinsdictionary.com/dictionary/english/lap-chart) from amatuer and professional race results posted at
+[MyLaps.com](http://mylaps.com).  These charts show cars and their race positions (Y axis) at each lap (X axis) in the race.
 
 An [AWS EC2](http://aws.amazon.com/ec2/) server runs a [Node](http://nodejs.org)/[Express](http://expressjs.com/)
 web application that [web scrapes](http://en.wikipedia.org/wiki/Web_scraping) the source html from 
@@ -43,11 +43,11 @@ The final graphical visualizations (bottom screenshot) are created on the browse
 
 To Run
 ------
-Click on the final (bottom-most) picture above to run p1lapchart on 2695656.
+Click on the final (bottom-most) picture above to run p1lapchart on the race with id=2695656.
 The *P1Software* section below points to pages with groups of lapcharts.
 
-There currently is no nice way of looking the MyLaps.com id for a race,
-except to find the race on MyLaps.com and note the id in its URL.  :(
+There currently is no nice way of finding the MyLaps.com id for a race,
+except to find the race on MyLaps.com and copy the id embedded in its URL.  :(
 
 P1Software.com
 --------------
@@ -60,6 +60,7 @@ The [P1Software.com Lapchart](http://p1software.com/lapchart) page compiles lapc
 - [24 Hours of LeMONS](http://p1software.com/lapchart/24-hours-of-lemons/)
 
 - SCCA
+    - [SCCA Club Racing](http://p1software.com/lapchart/scca-club-racing/)
     - [Tri-Region SCCA](http://p1software.com/lapchart/tri-region-scca/)
     - [South Jersey Region, SCCA](http://p1software.com/lapchart/south-jersey-region-scca)
     - [San Franciso Region SCCA](http://p1software.com/lapchart/san-francisco-region-scca)
@@ -69,9 +70,12 @@ Backstory
 In 2010-2012 [Grand-Am](http://grand-am.com) race seasons, I worked weekends with 
 [Phoenix Performance](http://phoenixperformance-news.com/) for the Subaru Road Racing Team.
 I wrote custom software that normalized the live track information transmitted to teams.
-A series of web-based dashboards then used this data to derive lap, time, and fuel information
+A series of web-based dashboards written by 
+[Michael](https://github.com/michaelelin) and 
+[David](https://github.com/crazycow013)
+then used this data to derive lap, time, and fuel information
 to help with race strategy.  These were fun, but very tense weekends!
 
 Unfortunately, at the beginning of 2013, the factory [terminated funding](http://subiesport.tv/site/2013/02/subaru-terminating-road-racing-team/).
-Phoenix Performance continues to build, race, and sell championship winning cars.
+[Phoenix Performance](http://phoenixperformance-news.com/) continues to build, race, and sell championship winning cars.
 I continue to tinker at the intersection of software and motorsports.
