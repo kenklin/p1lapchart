@@ -218,3 +218,5 @@ pip-log.txt
 ## https://github.com/github/gitignore/blob/master/Node.gitignore
 npm-debug.log
 node_modules
+
+.elasticbeanstalk/

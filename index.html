@@ -36,7 +36,9 @@ function p1lapchart(
   eventid,		// mylaps.com lapchart event id, e.g., 2695656, 2748380, 2759453
   lapchartdiv)	// element id for placing SVG chart
 {
-  var source = 'http://ec2-54-227-108-228.compute-1.amazonaws.com/api/eventlapchart/' + eventid; // 'http://localhost:8080/api/eventlapchart/' + eventid;
+//var source = 'http://localhost:8080/api/eventlapchart/' + eventid;
+//var source = 'http://ec2-54-227-108-228.compute-1.amazonaws.com/api/eventlapchart/' + eventid; 
+  var source = 'http://p1software-eb1.elasticbeanstalk.com/p1lapchart/api/' + eventid;
   var line_nosel = 2.5;
   var line_sel = 8;
   var x_tick_spacing = 10;	// min x (laps) spacing in pixels
