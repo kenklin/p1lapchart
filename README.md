@@ -70,6 +70,8 @@ Backstory
 In 2010-2012 [Grand-Am](http://grand-am.com) race seasons, I worked weekends with 
 [Phoenix Performance](http://phoenixperformance-news.com/) for the Subaru Road Racing Team.
 I wrote custom software that normalized the live track information transmitted to teams.
+A program parsed the [putty.log](http://putty.org) stream attached to our TransNET RS232 receiver and produced
+CSV files that [RTDFile](https://github.com/kenklin/rtdfile) used to populated our Excel spreadsheet.
 A series of web-based dashboards written by 
 [Michael](https://github.com/michaelelin) and 
 [David](https://github.com/crazycow013)
