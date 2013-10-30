@@ -81,3 +81,6 @@ to help with race strategy.  These were fun, but very tense weekends!
 Unfortunately, at the beginning of 2013, the factory [terminated funding](http://subiesport.tv/site/2013/02/subaru-terminating-road-racing-team/).
 [Phoenix Performance](http://phoenixperformance-news.com/) continues to build, race, and sell championship winning cars.
 I continue to tinker at the intersection of software and motorsports.
+
+
+![](http://p1software.com/wp-content/uploads/2013/08/ken_srrt_2_small.jpg)
