@@ -84,3 +84,10 @@ I continue to tinker at the intersection of software and motorsports.
 
 
 ![](http://p1software.com/wp-content/uploads/2013/08/ken_srrt_2_small.jpg)
+
+**2014 Update**
+
+I've returned to the rebooted [Phoenix American Motorsports](https://www.facebook.com/PhoenixAM) team for the 2014 [IMSA](http://imsa.com) [Continental Tire SportsCar Challenge](http://www.imsa.com/series/sportscar-challenge) where we are campaigning a pair of Boss 302R Mustangs.
+
+Read more about race analytics at [P1Software.com](http://p1software.com).
+![](https://fbcdn-sphotos-e-a.akamaihd.net/hphotos-ak-xfp1/t1.0-9/10492571_339005756246937_4506204574583915095_n.jpg)
