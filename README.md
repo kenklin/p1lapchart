@@ -94,8 +94,8 @@ Read more about race analytics at [P1Software.com](http://p1software.com).
 
 **2015 Update**
 
-I now work on P1Software full time and have two data products servicing [IMSA](http://imsa.com) WeatherTech and Continental race teams:
+I now work on P1Software full time and have two data products serving [IMSA](http://imsa.com) WeatherTech and Continental race teams:
 
 - [P1TS](http://p1software.com/p1imsa/p1imsa-home-page/) software provides team members with real-time information an visualizations they need for race strategy.
 
-- [P1Analaysis.com](http://p1analysis.com) subscription provides team members with post-session reports for study and analysis.
+- [P1Analysis.com](http://p1analysis.com) subscription provides team members with post-session reports for study and analysis.
